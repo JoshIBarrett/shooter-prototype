@@ -24,22 +24,31 @@ public class Robot extends TimedRobot {
    * initialization code.
    */
 
-   private TalonFX testMotor = new TalonFX(0, "rio");
+   private TalonFX testMotor = new TalonFX(2, "rio");
 
    private TunableNumber testMotorTuner;
 
+   private PeriodicIO mPeriodicIO = new PeriodicIO();
+
+  private class PeriodicIO {
+    public double demand;
+    public double rps;
+    public double voltage;
+  }
+
+
   @Override
   public void robotInit() {
-    testMotor.config_kP(0, 0.3);
+    testMotor.config_kP(0, 0.1);
     testMotor.config_kI(0, 0.0);
-    testMotor.config_kD(0, 0.03);
+    testMotor.config_kD(0, 0.1);
     testMotor.config_kF(0, 0.0);
     testMotor.setNeutralMode(NeutralMode.Coast);
     testMotor.configClosedloopRamp(0.1);
     testMotor.setInverted(false);
     
     
-    testMotorTuner = new TunableNumber("Top Left Falcon RPS", 0.0, true);
+    testMotorTuner = new TunableNumber("Test Motor RPS demand", 0.0, true);
     testMotor.set(ControlMode.Velocity, 0.0);
   }
 
@@ -57,20 +66,26 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-
-    if(testMotorTuner.get() > 0.0) {
-      testMotor.set(ControlMode.Velocity, testMotorTuner.get() / (10.0 / 2048.0));
+    
+    if (testMotorTuner.get() > 0) {
+      mPeriodicIO.demand = testMotorTuner.get() / (10.0 / 2048.0);
     } else {
-      testMotor.set(ControlMode.Velocity, 0.0);
+      mPeriodicIO.demand = 0;
     }
+    System.out.println(mPeriodicIO.demand);
 
-  
+    testMotor.set(ControlMode.Velocity, mPeriodicIO.demand);
+
+
+    mPeriodicIO.rps = Math.abs(testMotor.getSelectedSensorVelocity() * (10.0 / 2048.0));
+
+    mPeriodicIO.voltage = testMotor.getMotorOutputVoltage();
 
     // getSelectedSensorVelocity is in ticks/100ms, need to multiply by rot/2048 ticks to get rot/100ms, then 1000ms/1s to get rot/s
-    SmartDashboard.putNumber("Top Left ACTUAL Speed RPS", Math.abs(testMotor.getSelectedSensorVelocity() * (10.0 / 2048.0)));
+    SmartDashboard.putNumber("Test Motor ACTUAL Speed RPS", mPeriodicIO.rps);
 
 
-    SmartDashboard.putNumber("Top Left Percent Output", 100 * testMotor.getMotorOutputVoltage() / RobotController.getBatteryVoltage());
+    SmartDashboard.putNumber("Test Motor Percent Output", 100 * mPeriodicIO.voltage / RobotController.getBatteryVoltage());
    
   }
 
