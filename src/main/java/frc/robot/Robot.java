@@ -24,67 +24,23 @@ public class Robot extends TimedRobot {
    * initialization code.
    */
 
-   private TalonFX mUpLeft = new TalonFX(0, "rio");
-   private TalonFX mDownLeft = new TalonFX(2, "rio");
+   private TalonFX testMotor = new TalonFX(0, "rio");
 
-   private TalonFX mUpRight = new TalonFX(14, "rio");
-   private TalonFX mDownRight = new TalonFX(4, "rio");
-
-   private TunableNumber topLeftTuner;
-   private TunableNumber bottomLeftTuner;
-   private TunableNumber topRightTuner;
-   private TunableNumber bottomRightTuner;
+   private TunableNumber testMotorTuner;
 
   @Override
   public void robotInit() {
-    // P -> proportional to error
-    // I -> error accumulated
-    // D -> dampens rapid changes
-
-    // First, raise D value, then lower P value if needed
-
-    mUpLeft.config_kP(0, 0.3);
-    mUpLeft.config_kI(0, 0.0);
-    mUpLeft.config_kD(0, 0.03);
-    mUpLeft.config_kF(0, 0.0);
-    mUpLeft.setNeutralMode(NeutralMode.Coast);
-    mUpLeft.configClosedloopRamp(0.1);
-    mUpLeft.setInverted(false);
-    
-    mUpRight.config_kP(0, 0.3);
-    mUpRight.config_kI(0, 0.0);
-    mUpRight.config_kD(0, 0.03);
-    mUpRight.config_kF(0, 0.0);
-    mUpRight.setNeutralMode(NeutralMode.Coast);
-    mUpRight.configClosedloopRamp(0.1);
-    mUpRight.setInverted(true);
-
-    mDownLeft.config_kP(0, 0.3);
-    mDownLeft.config_kI(0, 0.0);
-    mDownLeft.config_kD(0, 0.03);
-    mDownLeft.config_kF(0, 0.0);
-    mDownLeft.setNeutralMode(NeutralMode.Coast);
-    mDownLeft.configClosedloopRamp(0.1);
-    mDownLeft.setInverted(true);
-
-    mDownRight.config_kP(0, 0.3);
-    mDownRight.config_kI(0, 0.0);
-    mDownRight.config_kD(0, 0.03);
-    mDownRight.config_kF(0, 0.0);
-    mDownRight.setNeutralMode(NeutralMode.Coast);
-    mDownRight.configClosedloopRamp(0.1);
-    mDownRight.setInverted(false);
+    testMotor.config_kP(0, 0.3);
+    testMotor.config_kI(0, 0.0);
+    testMotor.config_kD(0, 0.03);
+    testMotor.config_kF(0, 0.0);
+    testMotor.setNeutralMode(NeutralMode.Coast);
+    testMotor.configClosedloopRamp(0.1);
+    testMotor.setInverted(false);
     
     
-    topLeftTuner = new TunableNumber("Top Left Falcon RPS", 0.0, true);
-    topRightTuner = new TunableNumber("Top Right Falcon RPS", 0.0, true);
-    bottomLeftTuner = new TunableNumber("Bottom Left Falcon RPS", 0.0, true);
-    bottomRightTuner = new TunableNumber("Bottom Right Falcon RPS", 0.0, true);
-
-    mUpLeft.set(ControlMode.Velocity, 0.0);
-    mUpRight.set(ControlMode.Velocity, 0.0);
-    mDownLeft.set(ControlMode.Velocity, 0.0);
-    mDownRight.set(ControlMode.Velocity, 0.0);
+    testMotorTuner = new TunableNumber("Top Left Falcon RPS", 0.0, true);
+    testMotor.set(ControlMode.Velocity, 0.0);
   }
 
   @Override
@@ -102,41 +58,20 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
-    if(topLeftTuner.get() > 0.0) {
-      mUpLeft.set(ControlMode.Velocity, topLeftTuner.get() / (10.0 / 2048.0));
+    if(testMotorTuner.get() > 0.0) {
+      testMotor.set(ControlMode.Velocity, testMotorTuner.get() / (10.0 / 2048.0));
     } else {
-      mUpLeft.set(ControlMode.Velocity, 0.0);
+      testMotor.set(ControlMode.Velocity, 0.0);
     }
 
-    if (topRightTuner.get() > 0.0) {
-      mUpRight.set(ControlMode.Velocity, topRightTuner.get() / (10.0 / 2048.0));
-    } else { 
-      mUpRight.set(ControlMode.Velocity, 0.0);
-    }
-
-    if(bottomLeftTuner.get() > 0.0) {
-      mDownLeft.set(ControlMode.Velocity, bottomLeftTuner.get() / (10.0 / 2048.0));
-    } else {
-      mDownLeft.set(ControlMode.Velocity, 0.0);
-    }
-
-    if(bottomRightTuner.get() > 0.0) {
-      mDownRight.set(ControlMode.Velocity, bottomRightTuner.get() / (10.0 / 2048.0));
-    } else {
-      mDownRight.set(ControlMode.Velocity, 0.0);
-    }
+  
 
     // getSelectedSensorVelocity is in ticks/100ms, need to multiply by rot/2048 ticks to get rot/100ms, then 1000ms/1s to get rot/s
-    SmartDashboard.putNumber("Top Left ACTUAL Speed RPS", Math.abs(mUpLeft.getSelectedSensorVelocity() * (10.0 / 2048.0)));
-    SmartDashboard.putNumber("Bottom Left ACTUAL Speed RPS", Math.abs(mDownLeft.getSelectedSensorVelocity() * (10.0 / 2048.0)));
+    SmartDashboard.putNumber("Top Left ACTUAL Speed RPS", Math.abs(testMotor.getSelectedSensorVelocity() * (10.0 / 2048.0)));
 
-    SmartDashboard.putNumber("Top Right ACTUAL Speed RPS", Math.abs(mUpRight.getSelectedSensorVelocity() * (10.0 / 2048.0)));
-    SmartDashboard.putNumber("Bottom Right ACTUAL Speed RPS", Math.abs(mDownRight.getSelectedSensorVelocity() * (10.0 / 2048.0)));
 
-    SmartDashboard.putNumber("Top Left Percent Output", 100 * mUpLeft.getMotorOutputVoltage() / RobotController.getBatteryVoltage());
-    SmartDashboard.putNumber("Top Right Percent Output", 100 * mUpRight.getMotorOutputVoltage() / RobotController.getBatteryVoltage());
-    SmartDashboard.putNumber("Bottom Left Percent Output", 100 * mDownLeft.getMotorOutputVoltage() / RobotController.getBatteryVoltage());
-    SmartDashboard.putNumber("Bottom Right Percent Output", 100 * mDownRight.getMotorOutputVoltage() / RobotController.getBatteryVoltage());
+    SmartDashboard.putNumber("Top Left Percent Output", 100 * testMotor.getMotorOutputVoltage() / RobotController.getBatteryVoltage());
+   
   }
 
   @Override
