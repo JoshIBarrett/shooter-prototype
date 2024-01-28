@@ -45,15 +45,15 @@ public class Robot extends TimedRobot {
 
     mUpLeft.config_kP(0, 0.3);
     mUpLeft.config_kI(0, 0.0);
-    mUpLeft.config_kD(0, 0.03);
+    mUpLeft.config_kD(0, 0.1);
     mUpLeft.config_kF(0, 0.0);
     mUpLeft.setNeutralMode(NeutralMode.Coast);
     mUpLeft.configClosedloopRamp(0.1);
     mUpLeft.setInverted(false);
     
-    mUpRight.config_kP(0, 0.3);
+    mUpRight.config_kP(0, 0.18);
     mUpRight.config_kI(0, 0.0);
-    mUpRight.config_kD(0, 0.03);
+    mUpRight.config_kD(0, 0.02);
     mUpRight.config_kF(0, 0.0);
     mUpRight.setNeutralMode(NeutralMode.Coast);
     mUpRight.configClosedloopRamp(0.1);
@@ -61,15 +61,15 @@ public class Robot extends TimedRobot {
 
     mDownLeft.config_kP(0, 0.3);
     mDownLeft.config_kI(0, 0.0);
-    mDownLeft.config_kD(0, 0.03);
+    mDownLeft.config_kD(0, 0.1);
     mDownLeft.config_kF(0, 0.0);
     mDownLeft.setNeutralMode(NeutralMode.Coast);
     mDownLeft.configClosedloopRamp(0.1);
     mDownLeft.setInverted(true);
 
-    mDownRight.config_kP(0, 0.3);
+    mDownRight.config_kP(0, 0.18);
     mDownRight.config_kI(0, 0.0);
-    mDownRight.config_kD(0, 0.03);
+    mDownRight.config_kD(0, 0.02);
     mDownRight.config_kF(0, 0.0);
     mDownRight.setNeutralMode(NeutralMode.Coast);
     mDownRight.configClosedloopRamp(0.1);
@@ -133,10 +133,15 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Top Right ACTUAL Speed RPS", Math.abs(mUpRight.getSelectedSensorVelocity() * (10.0 / 2048.0)));
     SmartDashboard.putNumber("Bottom Right ACTUAL Speed RPS", Math.abs(mDownRight.getSelectedSensorVelocity() * (10.0 / 2048.0)));
 
-    SmartDashboard.putNumber("Top Left Percent Output", 100 * mUpLeft.getMotorOutputVoltage() / RobotController.getBatteryVoltage());
-    SmartDashboard.putNumber("Top Right Percent Output", 100 * mUpRight.getMotorOutputVoltage() / RobotController.getBatteryVoltage());
-    SmartDashboard.putNumber("Bottom Left Percent Output", 100 * mDownLeft.getMotorOutputVoltage() / RobotController.getBatteryVoltage());
-    SmartDashboard.putNumber("Bottom Right Percent Output", 100 * mDownRight.getMotorOutputVoltage() / RobotController.getBatteryVoltage());
+    SmartDashboard.putNumber("Top Left Motor Voltage", mUpLeft.getMotorOutputVoltage());
+    SmartDashboard.putNumber("Top Right Motor Voltage", mUpRight.getMotorOutputVoltage());
+    SmartDashboard.putNumber("Bottom Left Motor Voltage", mDownLeft.getMotorOutputVoltage());
+    SmartDashboard.putNumber("Bottom Right Motor Voltage", mDownRight.getMotorOutputVoltage());
+
+
+    SmartDashboard.putNumber("Bottom Right Current", mDownRight.getSupplyCurrent());
+        SmartDashboard.putNumber("Top Right Current", mUpRight.getSupplyCurrent());
+
   }
 
   @Override
