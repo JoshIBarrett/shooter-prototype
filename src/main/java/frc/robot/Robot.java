@@ -27,8 +27,8 @@ public class Robot extends TimedRobot {
    private TalonFX mUpLeft = new TalonFX(0, "rio");
    private TalonFX mDownLeft = new TalonFX(2, "rio");
 
-   private TalonFX mUpRight = new TalonFX(1, "rio");
-   private TalonFX mDownRight = new TalonFX(3, "rio");
+   private TalonFX mUpRight = new TalonFX(14, "rio");
+   private TalonFX mDownRight = new TalonFX(4, "rio");
 
    private TunableNumber topLeftTuner;
    private TunableNumber bottomLeftTuner;
@@ -43,7 +43,7 @@ public class Robot extends TimedRobot {
 
     // First, raise D value, then lower P value if needed
 
-    mUpLeft.config_kP(0, 0.4);
+    mUpLeft.config_kP(0, 0.3);
     mUpLeft.config_kI(0, 0.0);
     mUpLeft.config_kD(0, 0.03);
     mUpLeft.config_kF(0, 0.0);
@@ -51,7 +51,7 @@ public class Robot extends TimedRobot {
     mUpLeft.configClosedloopRamp(0.1);
     mUpLeft.setInverted(false);
     
-    mUpRight.config_kP(0, 0.4);
+    mUpRight.config_kP(0, 0.3);
     mUpRight.config_kI(0, 0.0);
     mUpRight.config_kD(0, 0.03);
     mUpRight.config_kF(0, 0.0);
@@ -59,7 +59,7 @@ public class Robot extends TimedRobot {
     mUpRight.configClosedloopRamp(0.1);
     mUpRight.setInverted(true);
 
-    mDownLeft.config_kP(0, 0.4);
+    mDownLeft.config_kP(0, 0.3);
     mDownLeft.config_kI(0, 0.0);
     mDownLeft.config_kD(0, 0.03);
     mDownLeft.config_kF(0, 0.0);
@@ -67,7 +67,7 @@ public class Robot extends TimedRobot {
     mDownLeft.configClosedloopRamp(0.1);
     mDownLeft.setInverted(true);
 
-    mDownRight.config_kP(0, 0.4);
+    mDownRight.config_kP(0, 0.3);
     mDownRight.config_kI(0, 0.0);
     mDownRight.config_kD(0, 0.03);
     mDownRight.config_kF(0, 0.0);
