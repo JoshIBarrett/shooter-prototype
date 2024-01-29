@@ -43,33 +43,33 @@ public class Robot extends TimedRobot {
 
     // First, raise D value, then lower P value if needed
 
-    mUpLeft.config_kP(0, 0.3);
+    mUpLeft.config_kP(0, 0.18);
     mUpLeft.config_kI(0, 0.0);
-    mUpLeft.config_kD(0, 0.1);
+    mUpLeft.config_kD(0, 0.02);
     mUpLeft.config_kF(0, 0.0);
     mUpLeft.setNeutralMode(NeutralMode.Coast);
     mUpLeft.configClosedloopRamp(0.1);
     mUpLeft.setInverted(false);
     
-    mUpRight.config_kP(0, 0.18);
+    mUpRight.config_kP(0, 0.3);
     mUpRight.config_kI(0, 0.0);
-    mUpRight.config_kD(0, 0.02);
+    mUpRight.config_kD(0, 0.03);
     mUpRight.config_kF(0, 0.0);
     mUpRight.setNeutralMode(NeutralMode.Coast);
     mUpRight.configClosedloopRamp(0.1);
     mUpRight.setInverted(true);
 
-    mDownLeft.config_kP(0, 0.3);
+    mDownLeft.config_kP(0, 0.18);
     mDownLeft.config_kI(0, 0.0);
-    mDownLeft.config_kD(0, 0.1);
+    mDownLeft.config_kD(0, 0.02);
     mDownLeft.config_kF(0, 0.0);
     mDownLeft.setNeutralMode(NeutralMode.Coast);
     mDownLeft.configClosedloopRamp(0.1);
     mDownLeft.setInverted(true);
 
-    mDownRight.config_kP(0, 0.18);
+    mDownRight.config_kP(0, 0.3);
     mDownRight.config_kI(0, 0.0);
-    mDownRight.config_kD(0, 0.02);
+    mDownRight.config_kD(0, 0.03);
     mDownRight.config_kF(0, 0.0);
     mDownRight.setNeutralMode(NeutralMode.Coast);
     mDownRight.configClosedloopRamp(0.1);
