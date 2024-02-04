@@ -28,7 +28,7 @@ public class Robot extends TimedRobot {
    private TalonFX mDownLeft = new TalonFX(2, "rio");
 
    private TalonFX mUpRight = new TalonFX(14, "rio");
-   private TalonFX mDownRight = new TalonFX(4, "rio");
+   private TalonFX mDownRight = new TalonFX(12, "rio");
 
    private TunableNumber topLeftTuner;
    private TunableNumber bottomLeftTuner;
